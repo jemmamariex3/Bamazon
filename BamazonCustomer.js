@@ -32,33 +32,62 @@ var showProducts = function() {
 
 var askUser = function(){
 	inquirer.prompt([
-
 	{
 		type: "input",
 		message: "What is the Item ID of the Product you wish to purchase?",
 		name: "ItemNum"
 	},
-
 	{
 		type: "input",
 		message: "How many would you like to buy?",
 		name: "numProducts"
-	},
-
+	}
 ]).then(function (answer) {
-	connection.query("SELECT * FROM Products WHERE ItemID = " + answer.productID, function(err, data) {
-            if(data[answer].StockQuantity < answer.numProducts)
+	connection.query("SELECT * FROM Products WHERE ItemID = ?", answer.ItemNum, function(err, data) {
+            if (parseInt(data[0].StockQuantity) < parseInt(answer.numProducts)) {
             	console.log("Insufficient quantity!");
-            else{
+            	inquirer.prompt([
+					{
+						type: "confirm",
+						message: "Would you like to go back to menu?",
+						name: "confirm",
+						default: false
+					}
+					]).then(function(answer){
+							if(answer.confirm === false){
+								return;
+							}
+							else{
+								showProducts();
+							}
+						});
+            } else {
             	connection.query("UPDATE Products SET ? WHERE ?", 
-            		[{StockQuantity: data[answer].StockQuantity - answer.numProducts
+            	[{
+            		StockQuantity: parseInt(data[0].StockQuantity) - parseInt(answer.numProducts)
 		        },
 		        {
 		        	ItemID: answer.productID
 		        }], function(err, resp) {
-		            console.log("Thank you for purchasing from Bamazon! You have spent $" + data[answer].Price*answer.numProducts+ ". Please come again!");
+		            console.log("Thank you for purchasing from Bamazon! You have spent $" +data[0].Price*answer.numProducts+ ". Please come again!");
+					inquirer.prompt([
+					{
+						type: "confirm",
+						message: "Would you like to go back to menu?",
+						name: "confirm",
+						default: false
+					}
+					]).then(function(answer){
+							if(answer.confirm === false){
+								return;
+							}
+							else{
+								showProducts();
+							}
+						});
 		        });
             }
         });
+	
 	});
 }
