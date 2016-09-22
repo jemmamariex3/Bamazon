@@ -1,6 +1,6 @@
 # Week12-Bamazon
 
-In this assignment, we are to be create an Amazon-like application with MySQL The app will take in orders from the customers and deplete stock from the inventory. 
+In this assignment, we are to be creating an Amazon-like application with MySQL. The app will take in orders from the customers and deplete stock from the inventory. 
 
 *BAMAZON DEMO VIDEO:* https://www.youtube.com/watch?v=A47-uFmklRc
 ##Challenge: Customer View
@@ -18,7 +18,7 @@ In this assignment, we are to be create an Amazon-like application with MySQL Th
 
 	* StockQuantity (how much of the product is available in stores)
 
-4. Database must have at least 10 different products. (i.e. Insert "mock" data rows into this database and table).
+4. Database must have at least 10 different products.
 
 5. Create a Node application called `BamazonCustomer.js`. (Must be about to display all of the items available for sale. Includes the ids, names, and prices of products for sale.) 
 
