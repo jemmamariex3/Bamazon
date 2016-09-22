@@ -2,6 +2,7 @@
 
 In this assignment, we are to be create an Amazon-like application with MySQL The app will take in orders from the customers and deplete stock from the inventory. 
 
+*BAMAZON DEMO VIDEO:* https://www.youtube.com/watch?v=A47-uFmklRc
 ##Challenge: Customer View
  
 1. We are to create a database called 'Bamazon'
