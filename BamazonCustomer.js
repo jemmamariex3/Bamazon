@@ -20,6 +20,7 @@ var showProducts = function() {
 	connection.query('SELECT * FROM Products', function(err, data) {
 		displayProducts = data.length;
 		for (var i = 0; i < displayProducts; i++) {
+			console.log("");
 			console.log("Item Id: " +data[i].ItemID);
 			console.log("Product: " +data[i].ProductName);
 			console.log("Price: " +data[i].Price);
@@ -33,9 +34,8 @@ var askUser = function(){
 	inquirer.prompt([
 
 	{
-		type: "checkbox",
+		type: "input",
 		message: "What is the Item ID of the Product you wish to purchase?",
-		choices: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
 		name: "ItemNum"
 	},
 
@@ -47,16 +47,16 @@ var askUser = function(){
 
 ]).then(function (answer) {
 	connection.query("SELECT * FROM Products WHERE ItemID = " + answer.productID, function(err, data) {
-            if(data[0].StockQuantity < answer.numProducts)
+            if(data[answer].StockQuantity < answer.numProducts)
             	console.log("Insufficient quantity!");
             else{
             	connection.query("UPDATE Products SET ? WHERE ?", 
-            		[{StockQuantity: data[0].StockQuantity - answer.numProducts
+            		[{StockQuantity: data[answer].StockQuantity - answer.numProducts
 		        },
 		        {
 		        	ItemID: answer.productID
 		        }], function(err, resp) {
-		            console.log("Thank you for purchasing from Bamazon! You have spent $" + data[0].Price*answer.numProducts+ ". Please come again!");
+		            console.log("Thank you for purchasing from Bamazon! You have spent $" + data[answer].Price*answer.numProducts+ ". Please come again!");
 		        });
             }
         });
